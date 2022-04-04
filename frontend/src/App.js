@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import _ from "underscore";
+// import _ from "underscore";
+import _ from "lodash";
 
 import "./App.css";
 import ReactTooltip from "react-tooltip";
 
-import MapChart from "./MapChart";
-import { MyResponsiveChoropleth } from "./MyResponsiveChoropleth";
+import MyResponsiveChoropleth from "./MyResponsiveChoropleth";
 import { TagCloud } from "react-tagcloud";
 
 import { data } from "./mapData";
@@ -15,16 +15,18 @@ import assignmentData from "./assignmentData.json";
 let uniqueCountries = [...new Set(assignmentData.map((e) => e.id))];
 let uniqueTopics = [...new Set(assignmentData.map((e) => e.topic))];
 let uniqueSectors = [...new Set(assignmentData.map((e) => e.sector))];
-let uniqueRegion = [...new Set(assignmentData.map((e) => e.region))];
-let uniquePestle = [...new Set(assignmentData.map((e) => e.pestle))];
-let uniqueSource = [...new Set(assignmentData.map((e) => e.source))];
+let uniqueRegions = [...new Set(assignmentData.map((e) => e.region))];
+let uniquePestles = [...new Set(assignmentData.map((e) => e.pestle))];
+let uniqueSources = [...new Set(assignmentData.map((e) => e.source))];
+let uniqueYears = [...new Set(assignmentData.map((e) => e.year))];
 
 console.log("unique countries array " + uniqueCountries);
-console.log(uniqueTopics);
-console.log(uniqueSectors);
-console.log(uniqueRegion);
-console.log(uniquePestle);
-console.log(uniqueSource);
+// console.log(uniqueTopics);
+// console.log(uniqueSectors);
+// console.log(uniqueRegions);
+// console.log(uniquePestles);
+// console.log(uniqueSources);
+// console.log(uniqueYears);
 
 const countriesObj = {};
 const countriesArray = [];
@@ -79,6 +81,13 @@ function App() {
 
 	return (
 		<div className="main-container">
+			<div>
+				{uniqueYears.map((item) => (
+					<button key={item} onClick={(e) => console.log(e.target.innerText)}>
+						{item}
+					</button>
+				))}
+			</div>
 			<div className="clouds">
 				<TagCloud
 					tags={topicsArrayCount}
@@ -90,9 +99,6 @@ function App() {
 				/>
 			</div>
 			<div className="container">
-				{/* <MapChart setTooltipContent={setContent} />
-			<ReactTooltip>{content}</ReactTooltip> */}
-
 				<MyResponsiveChoropleth countriesArray={countriesArray} />
 			</div>
 

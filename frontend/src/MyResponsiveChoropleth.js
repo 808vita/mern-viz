@@ -1,5 +1,6 @@
 // install (please make sure versions match peerDependencies)
 // yarn add @nivo/core @nivo/geo
+import React, { memo } from "react";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import worldData from "./world_countries.json";
 // make sure parent container have a defined height when using
@@ -8,9 +9,7 @@ import worldData from "./world_countries.json";
 // website examples showcase many properties,
 // you'll often use just a few of them.
 
-export const MyResponsiveChoropleth = ({
-	countriesArray /* see data tab */,
-}) => {
+const MyResponsiveChoropleth = ({ countriesArray /* see data tab */ }) => {
 	console.log(countriesArray);
 	const data = countriesArray;
 	return (
@@ -19,7 +18,7 @@ export const MyResponsiveChoropleth = ({
 			features={worldData.features}
 			margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 			onClick={(feature) => {
-				console.log(feature);
+				console.log(feature.data);
 			}}
 			colors="nivo"
 			domain={[0, 10]}
@@ -60,3 +59,5 @@ export const MyResponsiveChoropleth = ({
 		/>
 	);
 };
+
+export default memo(MyResponsiveChoropleth);
