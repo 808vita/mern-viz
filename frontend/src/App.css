@@ -171,6 +171,8 @@ body{
     
     cursor: pointer;
     color:black;
+    border-radius: 5%;
+
     transition: 1s ease-in-out;
     transform: scale(1);
     
@@ -179,6 +181,8 @@ body{
   .tag-cloud-tag:hover{
    
       background-color: black;
+      
+     
       color: white;
       transform: scale(1.2);
       box-shadow: 10px 10px 5px lightblue;
@@ -224,8 +228,9 @@ body{
     .container{
        display: flex;
        flex-direction: column;
-     height: 25vh;
+     height: 20vh;
      margin-bottom: 2vw;
+     overflow:hidden;
      
 
     
@@ -326,12 +331,10 @@ body{
     
     
     
-    .data-box span {
-        font-weight: 400;
-    }
+  
     .data {
         font-weight: 300;
-        font-size: 4vw;
+        font-size: 4.75vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
@@ -344,11 +347,18 @@ body{
     }
     .data span{
         font-weight: 400;
-        
+       
+        font-size: 4.5vw;
     }
+    .data-box span{
+        font-weight: 400;
+        font-size:3.5vw;
+    }  
+    
+
     .data-box p {
         font-weight: 600;
-        font-size:4vw;
+        font-size:3.5vw;
         background-color:black;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
         padding: 3vw 5vw 3vw 5vw;
@@ -371,17 +381,10 @@ body{
       
       }
 .tag-cloud-tag span {
-    font-size: 0.55vw !important;
+    font-size: 12px !important;
     margin:0.75vw !important;
     padding:0.75vw !important;
 };
 
-      .tag-cloud-tag:hover{
-       
-          background-color: black;
-          color: white;
-          transform: scale(1.2);
-          box-shadow: 10px 10px 5px lightblue;
-          
-      }
+
   }

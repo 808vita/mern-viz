@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "underscore";
 
 import "./App.css";
 import ReactTooltip from "react-tooltip";
@@ -47,6 +48,14 @@ console.log(
 );
 
 console.log(topicsArrayCount);
+
+let filteredByYear = _.groupBy(assignmentData, "year");
+
+console.log(filteredByYear);
+
+let result = _.groupBy(filteredByYear[2017], "topic");
+
+console.log(result);
 
 function App() {
 	const [content, setContent] = useState("");
