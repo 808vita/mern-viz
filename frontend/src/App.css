@@ -203,9 +203,22 @@ body{
 
 .year-box{
     display: flex;
-    justify-content: space-evenly;
+    justify-content:center;
+    gap:1vw;
     align-items: center;
     margin: 3vw 0 3vw 0;
+    
+    
+}
+.year-box span{
+    font-weight: 600;
+    font-size: 3vw;
+    
+}
+
+.year-box p{
+    font-weight: 400;
+    font-size: 2.5vw;
     
 }
 .year-box button{
@@ -413,5 +426,13 @@ body{
     padding:0.75vw !important;
 };
 
-
+.year-box{
+    font-size: 1vw;
+    padding: 0;
+    flex-wrap: wrap;
+}
+.year-box button{
+    font-size: 3vw;
+    font-weight: 400;
+}
   }

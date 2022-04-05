@@ -13,7 +13,7 @@ const MyResponsiveChoropleth = ({
 	countriesMap /* see data tab */,
 	countrySelection,
 }) => {
-	console.log(countriesMap);
+	// console.log(countriesMap);
 	const data = countriesMap;
 	return (
 		<ResponsiveChoropleth

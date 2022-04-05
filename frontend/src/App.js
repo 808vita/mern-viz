@@ -24,6 +24,7 @@ function App() {
 	const [selectedYearData, setSelectedYearData] = useState(
 		filteredByYear[selectedYear]
 	);
+
 	const [selectedTopic, setSelectedTopic] = useState("oil");
 	const [selectedCardData, setSelectedCardData] = useState(
 		_.groupBy(selectedYearData, "topic")[selectedTopic]
@@ -31,20 +32,25 @@ function App() {
 
 	const [selectedCountry, setSelectedCountry] = useState("All");
 
+	const vizOptions = ["intensity", "relevance", "likelihood"];
+	const [selectedViz, setSelectedViz] = useState(vizOptions[0]);
+
 	const countrySelection = (id) => {
 		if (id === "reset") {
-			setSelectedCardData(selectedYearData);
+			setSelectedCardData(_.groupBy(selectedYearData, "topic")["oil"]);
+			setSelectedTopic(() => "oil");
 			setCountriesMap(countriesArray);
 			return;
 		}
 
 		setSelectedCountry(id);
 		setSelectedCardData(_.groupBy(selectedYearData, "id")[id]);
+		console.log(_.groupBy(selectedYearData, "id")[id]);
 		setCountriesMap(_.groupBy(countriesArray, "id")[id]);
 
-		console.log("here///////////");
-		console.log(id);
-		console.log(_.groupBy(selectedYearData, "id")[id]);
+		// console.log("here///////////");
+		// console.log(id);
+		// console.log(_.groupBy(selectedYearData, "id")[id]);
 	};
 	let uniqueTopics = [...new Set(selectedYearData.map((e) => e.topic))];
 	//needed for initial topics
@@ -56,7 +62,7 @@ function App() {
 	let uniquePestles = [...new Set(selectedYearData.map((e) => e.pestle))];
 	let uniqueSources = [...new Set(selectedYearData.map((e) => e.source))];
 
-	console.log("unique countries array " + uniqueCountries);
+	// console.log("unique countries array " + uniqueCountries);
 	// console.log(uniqueTopics);
 	// console.log(uniqueSectors);
 	// console.log(uniqueRegions);
@@ -72,8 +78,8 @@ function App() {
 
 	// console.log(filteredByCountry);
 
-	const countriesObj = {};
-	const countriesArray = [];
+	let countriesObj = {};
+	let countriesArray = [];
 
 	uniqueCountries.map((e) =>
 		countriesArray.push(
@@ -82,13 +88,13 @@ function App() {
 				value: Math.round(
 					_.meanBy(
 						_.groupBy(selectedCardData, "id")[e],
-						(item) => item.intensity
+						(item) => item[selectedViz]
 					)
 				).toFixed(1),
 			})
 		)
 	);
-	console.log(countriesArray);
+	// console.log(countriesArray);
 
 	const [countriesMap, setCountriesMap] = useState(countriesArray);
 
@@ -126,13 +132,46 @@ function App() {
 	const handleYearButton = (e) => {
 		setSelectedYear(e.target.innerText);
 		setSelectedYearData(filteredByYear[e.target.innerText]);
-		setSelectedCardData(filteredByYear[e.target.innerText]);
+		// setSelectedCardData(filteredByYear[e.target.innerText]);
+		let newSelectedCardData = _.groupBy(
+			filteredByYear[e.target.innerText],
+			"topic"
+		)["oil"];
+		setSelectedTopic("oil");
+		setSelectedCountry("All");
+		setSelectedCardData(() => newSelectedCardData);
+		console.log(newSelectedCardData);
+
+		uniqueCountries = [...new Set(newSelectedCardData.map((e) => e.id))];
+		countriesObj = {};
+		countriesArray = [];
+
+		uniqueCountries.map((e) =>
+			countriesArray.push(
+				(countriesObj["id"] = {
+					id: e,
+					value: Math.round(
+						_.meanBy(
+							_.groupBy(newSelectedCardData, "id")[e],
+							(item) => item[selectedViz]
+						)
+					).toFixed(1),
+				})
+			)
+		);
+
+		setCountriesMap(() => countriesArray);
+		// countrySelection("reset");
 	};
 	const tagSelector = (topic) => {
 		console.log(topic);
-		const tagFiltered = _.groupBy(selectedCardData, "topic")[topic];
+
+		const tagFiltered = _.groupBy(selectedYearData, "topic")[topic];
+
 		console.log(tagFiltered);
+
 		let newUniqueCountries = [...new Set(tagFiltered.map((e) => e.id))];
+
 		console.log(newUniqueCountries);
 
 		let newGroupedArray = _.groupBy(tagFiltered, "topic");
@@ -145,21 +184,50 @@ function App() {
 				(countriesObj["id"] = {
 					id: e,
 					value: Math.round(
-						_.meanBy(newGroupedArray[topic], (item) => item.intensity)
+						_.meanBy(_.groupBy(tagFiltered, "id")[e], (item) => item.intensity)
 					).toFixed(1),
 				})
 			)
 		);
+
+		console.log(_.groupBy(tagFiltered, "id").USA);
+
 		console.log("here////");
 		console.log(_.meanBy(newGroupedArray[topic], (item) => item.intensity));
 		console.log(newArray);
+		setSelectedCardData(tagFiltered);
 		setCountriesMap(newArray);
 	};
+
+	const handleVizButton = (e) => {
+		let newVizarray = _.groupBy(filteredByYear[selectedYear], "topic")["oil"];
+		uniqueCountries = [...new Set(newVizarray.map((e) => e.id))];
+		countriesObj = {};
+		countriesArray = [];
+
+		uniqueCountries.map((country) =>
+			countriesArray.push(
+				(countriesObj["id"] = {
+					id: country,
+					value: Math.round(
+						_.meanBy(_.groupBy(newVizarray, "id")[country], (item) => item[e])
+					).toFixed(1),
+				})
+			)
+		);
+
+		setCountriesMap(() => countriesArray);
+
+		setSelectedViz(e);
+		setSelectedTopic("oil");
+		setSelectedCountry("all");
+	};
+
 	return (
 		<div className="main-container">
 			<div className="year-box">
 				<div className="selection-box">
-					<p>Selected Year :</p>
+					<p>Selected Year : </p>
 					<span>{selectedYear}</span>
 				</div>
 				{uniqueYears.map((item) => (
@@ -170,6 +238,22 @@ function App() {
 						}}
 					>
 						{item}
+					</button>
+				))}
+			</div>
+			<div className="year-box">
+				<div className="selection-box">
+					<p>Selected Viz : </p>
+					<span> {selectedViz.toUpperCase()}</span>
+				</div>
+				{vizOptions.map((item) => (
+					<button
+						key={item}
+						onClick={(e) => {
+							handleVizButton(e.target.innerText.toLowerCase());
+						}}
+					>
+						{item.toUpperCase()}
 					</button>
 				))}
 			</div>
@@ -187,7 +271,7 @@ function App() {
 					onClick={
 						(tag) => {
 							try {
-								setSelectedCardData(selectedYearData);
+								// setSelectedCardData(selectedYearData);
 								setSelectedTopic(tag.id);
 								setSelectedCountry("All");
 								tagSelector(tag.id);
@@ -206,7 +290,7 @@ function App() {
 					countrySelection={countrySelection}
 				/>
 			</div>
-			<div className="selection-box">
+			<div className="year-box">
 				<p>Selected Country :</p>
 				<span>{selectedCountry}</span>
 			</div>
