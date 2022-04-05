@@ -10,8 +10,8 @@
 /coverage
 
 # production
-/build
-/frontend/build
+
+
 # misc
 .env
 .DS_Store

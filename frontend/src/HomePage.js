@@ -6,7 +6,12 @@ const HomePage = () => {
 	const [assignmentData, setAssignmentData] = useState([]);
 
 	const getVizDataFromDb = async () => {
-		const response = await fetch("/api/data");
+		const response = await fetch("/api/data", {
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			},
+		});
 		const data = await response.json();
 		setAssignmentData(data);
 		setLoading(false);
