@@ -22,4 +22,4 @@ app.get("/", (req, res) => {
 
 app.use("/api/data", dataRoutes);
 
-app.listen(port, console.log("server running on port 5000"));
+app.listen(port, console.log("server running on port " + port));

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import _ from "underscore";
 import _ from "lodash";
 
@@ -12,12 +12,27 @@ import { data } from "./mapData";
 
 import assignmentData from "./assignmentData.json";
 
-let filteredByYear = _.groupBy(assignmentData, "year");
-
-// console.log(filteredByYear);
-let uniqueYears = [...new Set(assignmentData.map((e) => e.year))];
-
 function App() {
+	const [dataFromDb, setDataFromDb] = useState([]);
+
+	const getVizDataFromDb = async () => {
+		const response = await fetch("/api/data");
+		const data = await response.json();
+		setDataFromDb(data);
+	};
+	const logData = async () => await console.log(dataFromDb);
+
+	useEffect(() => {
+		console.log("refreshed");
+		getVizDataFromDb();
+	}, []);
+
+	logData();
+	let filteredByYear = _.groupBy(assignmentData, "year");
+
+	// console.log(filteredByYear);
+	let uniqueYears = [...new Set(assignmentData.map((e) => e.year))];
+
 	const [content, setContent] = useState("");
 
 	const [selectedYear, setSelectedYear] = useState(uniqueYears[0]);
