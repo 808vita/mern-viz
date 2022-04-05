@@ -10,6 +10,35 @@ body{
     justify-content: center;
     background-color: rgba(240, 240, 240,0.6); 
 }
+
+.loading-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    
+
+    height: 50vw;
+    width: 50vw;
+ margin: auto ;
+    border-radius:90%;
+
+    animation: expander2 2s ease-in infinite;
+    box-shadow: 10px 10px 5px lightblue;
+    transition: all 2s ease-in-out;
+    background-color: rgb(38, 136, 139);
+
+}
+
+.loading-card p{
+    
+    font-weight: 600;
+    font-size: 6vw;
+    transition: all 2s ease-in-out;
+    animation: expander2 2s ease-in infinite;
+}
+
 .main-container{
     background-color: white; 
     display: flex;
@@ -197,6 +226,14 @@ body{
   @keyframes expander {
     50% { opacity: 0.9; }
     20% {transform: scale(.8)};
+ 
+   
+  }
+
+  @keyframes expander2 {
+    50% { opacity: 0.9; }
+    80% {transform: scale(.8)};
+    
  
    
   }

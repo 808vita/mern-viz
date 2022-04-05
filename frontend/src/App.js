@@ -1,39 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import _ from "underscore";
 import _ from "lodash";
 
 import "./App.css";
-import ReactTooltip from "react-tooltip";
 
 import MyResponsiveChoropleth from "./MyResponsiveChoropleth";
 import { TagCloud } from "react-tagcloud";
 
-import { data } from "./mapData";
+// import { data } from "./mapData";
 
-import assignmentData from "./assignmentData.json";
+// import assignmentData from "./assignmentData.json";
 
-function App() {
-	const [dataFromDb, setDataFromDb] = useState([]);
+function App({ assignmentData }) {
+	// const [dataFromDb, setDataFromDb] = useState([]);
 
-	const getVizDataFromDb = async () => {
-		const response = await fetch("/api/data");
-		const data = await response.json();
-		setDataFromDb(data);
-	};
-	const logData = async () => await console.log(dataFromDb);
+	// const getVizDataFromDb = async () => {
+	// 	const response = await fetch("/api/data");
+	// 	const data = await response.json();
+	// 	setDataFromDb(data);
+	// };
+	// const logData = async () => await console.log(dataFromDb);
+	// const loadData = async () => await console.log(dataFromDb);
 
-	useEffect(() => {
-		console.log("refreshed");
-		getVizDataFromDb();
-	}, []);
+	// useEffect(() => {
+	// 	console.log("refreshed");
+	// 	getVizDataFromDb();
+	// }, []);
 
-	logData();
+	// logData();
+
 	let filteredByYear = _.groupBy(assignmentData, "year");
 
 	// console.log(filteredByYear);
 	let uniqueYears = [...new Set(assignmentData.map((e) => e.year))];
 
-	const [content, setContent] = useState("");
+	// const [content, setContent] = useState("");
 
 	const [selectedYear, setSelectedYear] = useState(uniqueYears[0]);
 	const [selectedYearData, setSelectedYearData] = useState(
@@ -72,10 +73,10 @@ function App() {
 
 	let uniqueCountries = [...new Set(selectedCardData.map((e) => e.id))];
 
-	let uniqueSectors = [...new Set(selectedYearData.map((e) => e.sector))];
-	let uniqueRegions = [...new Set(selectedYearData.map((e) => e.region))];
-	let uniquePestles = [...new Set(selectedYearData.map((e) => e.pestle))];
-	let uniqueSources = [...new Set(selectedYearData.map((e) => e.source))];
+	// let uniqueSectors = [...new Set(selectedYearData.map((e) => e.sector))];
+	// let uniqueRegions = [...new Set(selectedYearData.map((e) => e.region))];
+	// let uniquePestles = [...new Set(selectedYearData.map((e) => e.pestle))];
+	// let uniqueSources = [...new Set(selectedYearData.map((e) => e.source))];
 
 	// console.log("unique countries array " + uniqueCountries);
 	// console.log(uniqueTopics);
@@ -89,7 +90,7 @@ function App() {
 
 	// console.log(filteredByTopic);
 
-	let filteredByCountry = _.groupBy(selectedCardData, "id");
+	// let filteredByCountry = _.groupBy(selectedCardData, "id");
 
 	// console.log(filteredByCountry);
 
@@ -239,7 +240,7 @@ function App() {
 	};
 
 	return (
-		<div className="main-container">
+		<>
 			<div className="year-box">
 				<div className="selection-box">
 					<p>Selected Year : </p>
@@ -365,7 +366,7 @@ function App() {
 						)
 				)}
 			</div>
-		</div>
+		</>
 	);
 }
 
