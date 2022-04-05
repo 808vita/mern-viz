@@ -9,16 +9,26 @@ import worldData from "./world_countries.json";
 // website examples showcase many properties,
 // you'll often use just a few of them.
 
-const MyResponsiveChoropleth = ({ countriesArray /* see data tab */ }) => {
-	console.log(countriesArray);
-	const data = countriesArray;
+const MyResponsiveChoropleth = ({
+	countriesMap /* see data tab */,
+	countrySelection,
+}) => {
+	console.log(countriesMap);
+	const data = countriesMap;
 	return (
 		<ResponsiveChoropleth
 			data={data}
 			features={worldData.features}
 			margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 			onClick={(feature) => {
-				console.log(feature.data);
+				try {
+					countrySelection(feature.data.id);
+				} catch {
+					console.log("oof no object");
+					countrySelection("reset");
+				}
+
+				// console.log(feature.data);
 			}}
 			colors="nivo"
 			domain={[0, 10]}

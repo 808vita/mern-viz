@@ -201,7 +201,31 @@ body{
    
   }
 
-
+.year-box{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 3vw 0 3vw 0;
+    
+}
+.year-box button{
+    padding: 1vw 3vw 1vw 3vw;
+    border: none;
+    transition: all 2s ease-in-out;
+    font-size: 2vw;
+    font-weight: 400;
+}
+.year-box button:hover{
+    animation: expander 5s ease-in infinite;
+    box-shadow: 10px 10px 5px lightblue;
+    cursor: pointer;
+    background-color: rgb(38, 136, 139);
+}
+.selection-box{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2vw 0vw 2vw 0;
+}
 
 
   @media only screen and (max-width: 600px) {
