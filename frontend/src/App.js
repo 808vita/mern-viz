@@ -200,7 +200,10 @@ function App({ assignmentData }) {
 				(countriesObj["id"] = {
 					id: e,
 					value: Math.round(
-						_.meanBy(_.groupBy(tagFiltered, "id")[e], (item) => item.intensity)
+						_.meanBy(
+							_.groupBy(tagFiltered, "id")[e],
+							(item) => item[selectedViz]
+						)
 					).toFixed(1),
 				})
 			)
