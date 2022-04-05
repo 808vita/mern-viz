@@ -258,7 +258,7 @@ function App() {
 				))}
 			</div>
 			<div className="clouds">
-				<div className="selection-box">
+				<div className="year-box">
 					<p>Selected Topic :</p>
 					<span>{selectedTopic}</span>
 				</div>
